@@ -86,10 +86,14 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Email</label>
-                                        <input type="text" asp-for="Statusi" class="form-control" placeholder="Enter status ...">
-                                    </div>
-                                </div>
+                                        <label>Statusi</label>
+                                        <select asp-for="Statusi" class="form-control">
+                                        <option value="">-Select Status-</option>
+                                        <option id="1" value="1">Active</option>
+                                        <option id="2" value="2">OnHold</option>
+                                        <option id="3" value="2">Expired</option>
+                                        </select>
+                                     </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Phone Number</label>
