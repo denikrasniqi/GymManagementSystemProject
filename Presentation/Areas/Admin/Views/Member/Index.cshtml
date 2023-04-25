@@ -103,13 +103,32 @@
                 columns: [
                     { data: "id", title: "Id" },
                     { data: "userid", title: "UserId" },
-                    { data: "name", title: "Name", },
+                    { data: "name", title: "Name" },
                     { data: "startdate", title: "StartDate" },
-                    { data: "status", title: "Status", },
+                    { data: "status", title: "Status" },
                     { data: "price", title: "Price" },
-                    { data: "membership", title: "Membership" }
+                    { data: "membership", title: "Membership" },
+                    {
+                        data: null,
+                        title: "Actions",
+                        sClass: "text-center",
+                        render: function (a, b, data, d) {
+                            var actions = '<div class="btn-group btn-hspace">' +
+                                '<button type="button" data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle" aria-expanded="true"><span class="icon mdi mdi-chevron-down"></span></button>' +
+                                '<div class="dropdown-menu dropdown-menu-right">';
 
-                ],
+                            var urlEdit = '@Url.Action("Edit", "Member", new { area = "Admin"})';
+                            var urlDetails = '@Url.Action("Details", "Member", new { area = "Admin"})';
+                            actions += '<a class="dropdown-item" href="' + urlEdit + '/' + data.id + '" data-id="' + data.id + '"><i class="fa fa-edit text-warning"></i> Edit</a>';
+                            actions += '<a class="dropdown-item" href="' + urlDetails + '/' + data.id + '" data-id="' + data.id + '"><i class="fa fa-edit text-primary"></i> Details</a>';
+                            actions += '<a class="dropdown-item js-delete" href="javascript:void(0)" data-id="' + data.id + '"><i class="fa fa-trash text-danger"></i> Delete</a>';
+                            actions += '</div></div>';
+                            return actions;
+                        }
+                    }
+                ]
+
+
             });
 
             $(document).on("click", ".js-delete", function () {

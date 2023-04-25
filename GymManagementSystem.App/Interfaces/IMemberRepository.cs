@@ -8,5 +8,7 @@ namespace GymManagementSystem.App.Interfaces
         List<MembersViewModel> GetAllMembers();
         AspNetUser GetMember(string name);
 
+        Antaresimi? GetByStringId(string id);
+
     }
 }

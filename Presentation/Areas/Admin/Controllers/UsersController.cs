@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using GymManagementSystem.App.Constants;
 using System.Linq.Expressions;
 using Presentation.Areas.Admin.Models.UsersViewModels;
+using GymManagementSystem.App.Implementations;
 
 namespace Presantation.Areas.Admin.Controllers
 {
@@ -20,9 +21,9 @@ namespace Presantation.Areas.Admin.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IRolesRepository rolesRepository;
         private readonly ILogger _logger;
-        private readonly ISelectListService selectListService;
+        private readonly ISelectListService _selectlistService;
 
-        public UsersController(IUserRepository userRepository, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, IRolesRepository rolesRepository, ILogger<UsersController> logger)
+        public UsersController(ISelectListService selectListService, IUserRepository userRepository, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, IRolesRepository rolesRepository, ILogger<UsersController> logger)
         {
             this.userRepository = userRepository;
             _userManager = userManager;
@@ -30,7 +31,8 @@ namespace Presantation.Areas.Admin.Controllers
             _roleManager = roleManager;
             this.rolesRepository = rolesRepository;
             _logger = logger;
-            this.selectListService = selectListService;
+            _selectlistService = selectListService;
+            
         }
 
         [HttpGet]
@@ -66,7 +68,7 @@ namespace Presantation.Areas.Admin.Controllers
                     Surname = user.Surname!,
                 };
 
-                model.Roles = new SelectList(selectListService.GetRolesKeysValues(), "SKey", "Value", model.RoleId);
+                model.Roles = new SelectList(_selectlistService.GetRolesKeysValues(), "SKey", "Value", model.RoleId);
 
                 return View("Add", model);
             }

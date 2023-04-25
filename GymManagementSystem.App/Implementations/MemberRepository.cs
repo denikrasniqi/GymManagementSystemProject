@@ -30,5 +30,9 @@ namespace GymManagementSystem.App.Implementations
             var user = _gymSystemDbContext.AspNetUsers.Where(x => x.Name == name).FirstOrDefault();
             return user!;
         }
+        public Antaresimi? GetByStringId(string id)
+        {
+            return _gymSystemDbContext.Antaresimis.Where(x => x.Id == Convert.ToInt32(id)).FirstOrDefault();
+        }
     }
 }

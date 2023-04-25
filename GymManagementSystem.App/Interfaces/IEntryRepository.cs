@@ -12,5 +12,7 @@ namespace GymManagementSystem.App.Interfaces
         //Set out for user id
         public bool SetOutForUser(string userId);
 
+        
+
     }
 }

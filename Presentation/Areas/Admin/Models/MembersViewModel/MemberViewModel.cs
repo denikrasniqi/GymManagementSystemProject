@@ -1,6 +1,6 @@
-﻿namespace Presentation.Areas.Admin.Models.MembersViewModel
+﻿namespace Presentation.Areas.Admin.Models.EntryViewModel
 {
-    public class MemberViewModel
+    public class EntryViewModel // antar
     {
         public string? Id { get; set; }
         public string? UserId { get; set; }

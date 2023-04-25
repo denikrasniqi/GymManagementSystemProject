@@ -4,8 +4,12 @@ using GymManagementSystem.App.Implementations;
 using GymManagementSystem.App.Interfaces;
 using GymManagementSystem.Data.Entities;
 using GymManagementSystem.Data.Identity;
+using GymManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Areas.Admin.Models.MembersViewModel;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Presentation.Areas.Admin.Models.EntryViewModel;
+using Presentation.Areas.Admin.Models.UsersViewModels;
+using System.Data;
 using System.Linq;
 
 namespace Presentation.Areas.Admin.Controllers
@@ -28,26 +32,71 @@ namespace Presentation.Areas.Admin.Controllers
         }
         public IActionResult Add()
         {
-            var model = new MemberViewModel();
+            var model = new EntryViewModel();
             return View(model);
         }
         [HttpPost]
-        public IActionResult AddAsync(MemberViewModel model)
+        public IActionResult AddAsync(EntryViewModel model)
         {
             if (ModelState.IsValid)
             {
                 if (string.IsNullOrEmpty(model.Id))
                 {
-                    var member = new Antaresimi { UserId = model.UserId!,Name =model.Name! ,Surname = model.Surname! , StartDate = Convert.ToDateTime(model.StartDate), Statusi = model.Statusi, Qmimi = Convert.ToInt32(model.Qmimi), Antaresimi1 = model.Antaresimi };
+
+                    DateTime startDate = DateTime.Now;
+                    var member = new Antaresimi { UserId = model.UserId!,Name =model.Name! ,Surname = model.Surname! ,
+                        StartDate = startDate, Statusi = model.Statusi, Qmimi = Convert.ToInt32(model.Qmimi),
+                        Antaresimi1 = model.Antaresimi };
                     _memberRepository.Add(member);
                     _memberRepository.SaveChanges();
 
                     return RedirectToAction("Index");
                 }
+                else
+                {
+
+                    var member = _memberRepository.GetByStringId(model.Id);
+
+                    if (member != null)
+                    {
+                        member.Name = model.Name;
+                        member.Surname = model.Surname;
+                        member.StartDate = (DateTime)model.StartDate;
+                        member.Statusi = model.Statusi;
+                        member.Antaresimi1 = model.Antaresimi;
+                        member.Qmimi = (int)model.Qmimi;
+
+                        _memberRepository.Update(member);
+                        _memberRepository.SaveChanges();
+
+                        return RedirectToAction("Index");
+
+                    }
+                }
             }
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        public IActionResult Edit(string id)
+        {
+            Antaresimi? member = _memberRepository.GetByStringId(id);
+            if (member != null)
+            {
+                var model = new EntryViewModel()
+                {
+                    Id = id,
+                    Name = member.Name!,
+                    Surname = member.Surname!,
+                    StartDate= member.StartDate,
+                    Statusi = member.Statusi,
+                    Antaresimi = member.Antaresimi1,
+                    Qmimi = member.Qmimi
+                };
 
+                return View("Add", model);
+            }
+            return RedirectToAction("Index");
+        }
         [HttpGet("getUserByName")]
         public IActionResult GetUserByName(string name)
         {
@@ -88,6 +137,24 @@ namespace Presentation.Areas.Admin.Controllers
             catch (Exception)
             {
                 throw;
+            }
+        }
+        [HttpDelete]
+        public IActionResult Delete(string id)
+        {
+            try
+            {
+                var member = _memberRepository.GetByStringId(id);
+                if (member != null)
+                {
+                    _memberRepository.Remove(member);
+                    _memberRepository.SaveChanges();
+                }
+                return Ok(true);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }
