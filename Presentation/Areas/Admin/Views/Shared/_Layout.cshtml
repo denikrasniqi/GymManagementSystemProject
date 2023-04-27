@@ -1,4 +1,5 @@
-﻿@using GymManagementSystem.App.Constants
+﻿@inject SignInManager<ApplicationUser> SignInManager
+@using GymManagementSystem.App.Constants
 
 @{
     var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
@@ -61,11 +62,17 @@
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+                <li class="nav-card-item-right">
+                    <form asp-area="Client" asp-action="Logout" asp-controller="Account" method="post">
+                        <button type="submit" class="nav-link">@SharedLocalizer["SignOut"]</button>
+                    </form>
+                </li>
                 <!-- Navbar Search -->
                 <li class="nav-item">
                     <a class="nav-link" data-widget="navbar-search" href="#" role="button">
                         <i class="fas fa-search"></i>
                     </a>
+
                     <div class="navbar-search-block">
                         <form class="form-inline">
                             <div class="input-group input-group-sm">

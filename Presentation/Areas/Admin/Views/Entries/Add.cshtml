@@ -1,5 +1,5 @@
-﻿@using Presentation.Areas.Admin.Models.EntryViewModel
-@model EntryViewModel
+﻿@using Presentation.Areas.Admin.Models.EntrysViewModel
+@model EntriesViewModel
 
 @{
     string cssClass = string.IsNullOrEmpty(Model.Id) ? "primary" : "warning";
@@ -55,7 +55,7 @@
                         <h3 class="card-title">@cardTitleDescription</h3>
                     </div>
                     <!-- /.card-header -->
-                    <form id="MemberForm" asp-action="Add" asp-controller="Member" asp-area="Admin" method="post" enctype="multipart/form-data">
+                    <form id="EntriesForm" asp-action="Add" asp-controller="Entries" asp-area="Admin" method="post" enctype="multipart/form-data">
                         <input type="hidden" asp-for="Id" />
                         <div class="card-body">
                             <div class="row" id="showNotFoundAlert" hidden>
@@ -68,7 +68,7 @@
                                     <div class="form-group">
                                         <label for="Name">Name</label>
                                         <input type="text" asp-for="Name" class="form-control help-sidebar" placeholder="Enter Name..." required>
-                                        <input class="btn btn-success mt-3" value="Search" id="searchForUser" />
+                                        <input class="btn btn-success mt-3" value="Search" id="searchForMember" />
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -82,38 +82,32 @@
                                         <input type="text" asp-for="UserId" class="form-control help-sidebar" placeholder="Enter UserId..." hidden>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Statusi</label>
-                                        <select asp-for="Statusi" class="form-control">
-                                        <option value="">-Select Status-</option>
-                                        <option id="1" value="1">Active</option>
-                                        <option id="2" value="2">OnHold</option>
-                                        <option id="3" value="2">Expired</option>
-                                        </select>
-                                     </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Phone Number</label>
-                                        <input type="number" asp-for="Qmimi" class="form-control" placeholder="Enter price ...">
+                                        <input type="datetime-local" name="EntryDate" class="form-control help-sidebar" placeholder="Enter EntryTime" required>
+                                        <button class="btn btn-danger mt-3 color" type="button" onclick="getCurrentDateTime('entry')">Entry</button>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6">
-                                @*<div class="form-group">
-                                    <label>Phone Number</label>
-                                    <input type="text" asp-for="Antaresimi" class="form-control" placeholder="Enter membership ...">
-                                </div>*@
-                                <label>Select Membership Length</label>
-                                <select asp-for="Antaresimi" class="form-control">
-                                    <option value="">-Select Membership-</option>
-                                    <option id="1" value="1">1 Month</option>
-                                    <option id="2" value="2">3 Months</option>
-                                    <option id="3" value="1">6 Months</option>
-                                    <option id="4" value="2">1 Year</option>
-                                </select>
+                                @if (ViewBag.IsAddMode)
+                                {
+                                    <div class="col-sm-6" style="display:none;">
+                                        <div class="form-group">
+                                            <input type="datetime-local" name="ExitDate" class="form-control help-sidebar" placeholder="Enter ExitTime" disabled>
+                                            <button class="btn btn-danger mt-3 color" type="button" onclick="getCurrentDateTime('exit')" disabled>Exit</button>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="datetime-local" name="ExitDate" class="form-control help-sidebar" placeholder="Enter ExitTime">
+                                            <button class="btn btn-danger mt-3 color" type="button" onclick="getCurrentDateTime('exit')">Exit</button>
+                                        </div>
+                                    </div>
+                                }
+
+
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -140,19 +134,31 @@
     <!-- File Input -->
     <script src="~/theme/plugins/fileinput/js/fileinput.min.js"></script>
     <script>
+        function getCurrentDateTime(button) {
+            var today = new Date().toISOString().slice(0, 19);
+            var inputField;
+            if (button === 'entry') {
+                inputField = document.querySelector("[name='EntryDate']");
+            } else if (button === 'exit') {
+                inputField = document.querySelector("[name='ExitDate']");
+            }
+            if (inputField) {
+                inputField.value = today;
+            }
+        }
         $(document).ready(function () {
 
             var maxUpload = 3000;
             var uploadExtensions = @Html.Raw(Json.Serialize(extensions));
 
             //this waits for click of button searchForUser
-            $('#searchForUser').on('click', function () {
+            $('#searchForMember').on('click', function () {
 
                 //calls api to get user
                 //set the form data from given user
                 $.ajax({
                     type: "GET",
-                    url: '@Url.Action("getUserByName")',
+                    url: '@Url.Action("getMemberByName")',
                     dataType: 'json',
                     data: {
                         name: $('#Name').val()
@@ -173,7 +179,7 @@
                 })
             })
 
-            $('#UserForm').validate({
+            $('#EntriesForm').validate({
                 rules: {
                     UserId: {
                         required: true,
@@ -194,13 +200,16 @@
                         required: "SharedLocalizer('FieldRequired')",
                         minlength: "SharedLocalizer('MinLength3')"
                     },
-                    StartDate: {
+                    Name: {
                         required: "SharedLocalizer('FieldRequired')",
                     },
-                    Statusi: {
+                    Surname: {
                         required: "SharedLocalizer('FieldRequired')",
                     },
-                    Qmimi: {
+                    IsEntry: {
+                        required: "SharedLocalizer('FieldRequired')",
+                    },
+                    EntryDate: {
                         required: "SharedLocalizer('FieldRequired')",
                     },
                 },

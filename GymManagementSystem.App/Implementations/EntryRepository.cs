@@ -4,11 +4,11 @@ using GymManagementSystem.Data.Entities;
 
 namespace GymManagementSystem.App.Implementations
 {
-    public class EntryRepository : IEntryRepository
+    public class EntryRepository : Repository<Entry> ,IEntryRepository
     {
         protected readonly GymSystemDBContext _gymSystemDbContext;
 
-        public EntryRepository(GymSystemDBContext gymSystemDbContext)
+        public EntryRepository(GymSystemDBContext gymSystemDbContext) : base(gymSystemDbContext)
         {
             _gymSystemDbContext = gymSystemDbContext;
         }
@@ -30,6 +30,12 @@ namespace GymManagementSystem.App.Implementations
         public bool SetOutForUser(string userId)
         {
             throw new NotImplementedException();
+        }
+
+        public Antaresimi GetMember(string name)
+        {
+            var entry = _gymSystemDbContext.Antaresimis.Where(x => x.Name == name).FirstOrDefault();
+            return entry!;
         }
     }
 }

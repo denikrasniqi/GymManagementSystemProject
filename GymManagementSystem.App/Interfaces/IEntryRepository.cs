@@ -2,7 +2,7 @@
 
 namespace GymManagementSystem.App.Interfaces
 {
-    public interface IEntryRepository
+    public interface IEntryRepository : IRepository<Entry>
     {
         //Get list of entries for user
         public List<Entry> GetEntries();
@@ -12,7 +12,7 @@ namespace GymManagementSystem.App.Interfaces
         //Set out for user id
         public bool SetOutForUser(string userId);
 
-        
+        public Antaresimi GetMember(string name);
 
     }
 }
