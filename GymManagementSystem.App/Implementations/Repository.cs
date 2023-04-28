@@ -167,5 +167,9 @@ namespace GymManagementSystem.App.Implementations
                 throw e;
             }
         }
+        public int Count()
+        {
+            return _context.Set<T>().Count();
+        }
     }
 }

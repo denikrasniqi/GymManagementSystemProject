@@ -57,27 +57,48 @@ namespace Presentation.Areas.Admin.Controllers
 
                     return RedirectToAction("Index");
                 }
-                //else
-                //{
+                else
+                {
 
-                //    var member = _memberRepository.GetByStringId(model.Id);
+                    var entry = _entryRepo.GetByStringId(model.Id);
 
-                //    if (member != null)
-                //    {
-                //        member.Name = model.Name;
-                //        member.Surname = model.Surname;
-                //        member.StartDate = (DateTime)model.StartDate;
-                //        member.Statusi = model.Statusi;
-                //        member.Antaresimi1 = model.Antaresimi;
-                //        member.Qmimi = (int)model.Qmimi;
+                    if (entry != null)
+                    {
+                        entry.Name = model.Name;
+                        entry.Surname = model.Surname;
+                        entry.IsExit= true;
+                        entry.ExitDate = model.ExitDate.GetValueOrDefault();
+                        
 
-                //        _memberRepository.Update(member);
-                //        _memberRepository.SaveChanges();
+                        _entryRepo.Update(entry);
+                        _entryRepo.SaveChanges();
 
-                //        return RedirectToAction("Index");
+                        return RedirectToAction("Index");
 
-                //    }
-                //}
+                    }
+                }
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public IActionResult Edit(string id)
+        {
+            ViewBag.Title = "Add Exit";
+            ViewBag.IsEditMode = true;
+            // add the code below to disable the ExitDate input when adding a new entry
+            ViewBag.IsAddMode = false;
+            Entry? entry = _entryRepo.GetByStringId(id);
+            if (entry != null)
+            {
+                var model = new EntriesViewModel()
+                {
+                    Id = id,
+                    Name = entry.Name!,
+                    Surname = entry.Surname!,
+                    IsExit = false,
+                };
+
+                return View("Add", model);
             }
             return RedirectToAction("Index");
         }

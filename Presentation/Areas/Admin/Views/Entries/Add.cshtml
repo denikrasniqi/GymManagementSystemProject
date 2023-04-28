@@ -84,8 +84,14 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <input type="datetime-local" name="EntryDate" class="form-control help-sidebar" placeholder="Enter EntryTime" required>
-                                        <button class="btn btn-danger mt-3 color" type="button" onclick="getCurrentDateTime('entry')">Entry</button>
+                                        <input type="datetime-local" name="EntryDate" class="form-control help-sidebar" placeholder="Enter EntryTime" @if (!(bool)(ViewBag.IsEditMode ?? false)) {
+                                        <text>required</text>
+                                        } @if ((bool)(ViewBag.IsEditMode ?? false)) {
+                                        <text>style="display:none;"</text>
+                                        }>
+                                        <button class="btn btn-danger mt-3 color" type="button" onclick="getCurrentDateTime('entry')" @if ((bool)(ViewBag.IsEditMode ?? false)) {
+        <text>style="display:none;"</text>
+        }>Entry</button>
                                     </div>
                                 </div>
                                 @if (ViewBag.IsAddMode)
@@ -99,6 +105,18 @@
                                 }
                                 else
                                 {
+                                    <div class="col-sm-6" @if ((bool)(ViewBag.IsEditMode ?? false)) {
+                                <text>style="display:none;"</text>
+ }>
+            <div class="form-group">
+                <input type="datetime-local" name="EntryDate" class="form-control help-sidebar" placeholder="Enter EntryTime" @if (!(bool)(ViewBag.IsEditMode ?? false)) {
+                                        <text>required</text>
+ }>
+                <button class="btn btn-danger mt-3 color" type="button" onclick="getCurrentDateTime('entry')" @if ((bool)(ViewBag.IsEditMode ?? false)) {
+                                        <text>style="display:none;"</text>
+ }>Entry</button>
+            </div>
+        </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <input type="datetime-local" name="ExitDate" class="form-control help-sidebar" placeholder="Enter ExitTime">
@@ -142,7 +160,7 @@
             } else if (button === 'exit') {
                 inputField = document.querySelector("[name='ExitDate']");
             }
-            if (inputField) {
+            if (inputField !== null) { // add null check here
                 inputField.value = today;
             }
         }

@@ -21,5 +21,7 @@ namespace GymManagementSystem.App.Interfaces
         T FindOne(Expression<Func<T, bool>> predicte);
         int SaveChanges();
 
+        int Count();
+
     }
 }

@@ -1,28 +1,41 @@
 ﻿using GymManagementSystem.App.Constants;
+using GymManagementSystem.App.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Presentation.Areas.Admin.Models.DashboardViewModels;
 
 namespace Presentation.Areas.Admin.Controllers
 {
     [Area(AreasConstants.Admin)]
-    [Authorize(Roles = RoleConstants.Admin)]
+    //[Authorize(Roles = RoleConstants.Admin)]
     public class HomeController : Controller
     {
         private IOptions<RequestLocalizationOptions> _options;
         private IHttpContextAccessor _httpContextAccessor;
+        private readonly IUserRepository userRepository;
+        private readonly IMemberRepository memberRepository;
+        private readonly IEntryRepository entryRepository;
 
-        public HomeController(IHttpContextAccessor httpContextAccessor, IOptions<RequestLocalizationOptions> options)
+        public HomeController(IHttpContextAccessor httpContextAccessor, IOptions<RequestLocalizationOptions> options,IUserRepository userRepo, IMemberRepository memberRepo, IEntryRepository entryRepo)
         {
             _httpContextAccessor = httpContextAccessor;
             _options = options;
+            this.userRepository = userRepo;
+            this.memberRepository = memberRepo;
+            this.entryRepository = entryRepo;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var model = new DashboardViewModel();
+            model.NrUsers = userRepository.Count();
+            model.NrMembers = memberRepository.Count();
+            model.NrEntries = entryRepository.Count();
+            return View(model);
+            
         }
 
         public IActionResult SetLanguage(string culture)

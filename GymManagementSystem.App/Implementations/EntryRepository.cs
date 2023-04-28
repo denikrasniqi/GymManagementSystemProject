@@ -37,5 +37,9 @@ namespace GymManagementSystem.App.Implementations
             var entry = _gymSystemDbContext.Antaresimis.Where(x => x.Name == name).FirstOrDefault();
             return entry!;
         }
+        public Entry? GetByStringId(string id)
+        {
+            return _gymSystemDbContext.Entries.Where(x => x.Id == Convert.ToInt32(id)).FirstOrDefault();
+        }
     }
 }
