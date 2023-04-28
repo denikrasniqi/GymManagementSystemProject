@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Job_Portal.App.Constants
+namespace GymManagementSystem.App.Constants
 {
     public static class LanguageConstants
     {

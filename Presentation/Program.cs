@@ -117,6 +117,12 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddAuthorization(option =>
+{
+    option.AddPolicy("Client", policy => policy.RequireRole("Client", "Admin"));
+});
+
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

@@ -117,7 +117,64 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Actions" xml:space="preserve">
+    <value>Aksionet</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Shto</value>
+  </data>
+  <data name="Confirmed" xml:space="preserve">
+    <value>Konfirmimi</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Paneli</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Entries" xml:space="preserve">
+    <value>Hyrjet</value>
+  </data>
+  <data name="Entries List" xml:space="preserve">
+    <value>Lista e Hyrjeve</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Faqja Kryesore</value>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>Antaret</value>
+  </data>
+  <data name="Members List" xml:space="preserve">
+    <value>Lista e Antarve</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Emri</value>
+  </data>
+  <data name="New Register" xml:space="preserve">
+    <value>Regjistrimet e Reja</value>
+  </data>
+  <data name="New Users" xml:space="preserve">
+    <value>Perdoruesit e Ri</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Roli</value>
+  </data>
+  <data name="Sales" xml:space="preserve">
+    <value>Shitjet</value>
+  </data>
+  <data name="Showing" xml:space="preserve">
+    <value>Duke Shfaqur</value>
+  </data>
+  <data name="Surname" xml:space="preserve">
+    <value>Mbiemri</value>
+  </data>
   <data name="UserList" xml:space="preserve">
     <value>Lista e perdoruesve</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Perdoruesit</value>
+  </data>
+  <data name="Visitors" xml:space="preserve">
+    <value>Vizitoret</value>
   </data>
 </root>
