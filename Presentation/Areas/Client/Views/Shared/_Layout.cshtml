@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<ApplicationUser> SignInManager
+@using GymManagementSystem.App.Interfaces
+@using GymManagementSystem.App.Constants
+@{
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
+}
+@inject IUserService userService
 <html>
 <head>
     <meta charset="utf-8" />
@@ -89,6 +95,37 @@
                         <div class="navbar-nav mr-auto py-0">
                             <a href="index.html" class="nav-item nav-link active">Home</a>
                             <a href="about.html" class="nav-item nav-link">About</a>
+                            @if (!SignInManager.IsSignedIn(User))
+                            {
+                                <li class="nav-card-item-right">
+                                    <a class="nav-link" asp-action="Login" asp-controller="Account">Sign in</a>
+                                </li>
+                                <li class="nav-card-item-right create-account">
+                                    <a class="nav-link" asp-action="Account" asp-controller="Users">Create account</a>
+                                </li>
+
+                            }
+                            @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                            {
+                                <li class="nav-card-item-right">
+                                    <a asp-action="Index" asp-controller="Users" class="nav-link">
+                                        Go to Admin
+                                    </a> 
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-card-item-right create-account">
+                                    <a class="nav-link" asp-action="Account" asp-controller="Users" asp-route-id="@userService.GetUserId()">Account</a>
+                                </li>
+
+                                <li class="nav-card-item-right">
+                                    <form asp-area="Client" asp-action="Logout" asp-controller="Account">
+                                        &nbsp; &nbsp; &nbsp;
+                                        <button style="background-color:#92d35e; color:white;" type="submit" class="nav-link">Sign out</button>
+                                    </form>
+                                </li>
+                            }
                             <a href="class.html" class="nav-item nav-link">Classes</a>
                             <a href="team.html" class="nav-item nav-link">Trainers</a>
                             <div class="nav-item dropdown">

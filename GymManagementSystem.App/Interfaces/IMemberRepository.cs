@@ -10,5 +10,7 @@ namespace GymManagementSystem.App.Interfaces
 
         Antaresimi? GetByStringId(string id);
 
+        public Antaresimi? GetByStringUserId(string id);
+        int GetMemberIdByUserId(string userId);
     }
 }

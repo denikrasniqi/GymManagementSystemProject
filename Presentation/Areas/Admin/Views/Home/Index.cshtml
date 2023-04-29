@@ -30,42 +30,27 @@
                     <div class="inner">
                         <h3>@Model.NrUsers</h3>
 
-                        <p>@SharedLocalizer["NumberOfUsers"]</p>
+                        <p>@SharedLocalizer["Number Of Users"]</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
                     </div>
-                    <a asp-action="Index" asp-controller="Users" class="small-box-footer">@SharedLocalizer["MoreInfo"] <i class="fas fa-arrow-circle-right"></i></a>
+                    <a asp-action="" asp-controller="Users" class="small-box-footer">@SharedLocalizer["MoreInfo"] <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
             <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-info">
+                <div class="small-box bg-warning">
                     <div class="inner">
                         <h3>@Model.NrMembers</h3>
 
                         <p>@SharedLocalizer["Number Of Members"]</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-bag"></i>
+                        <i class="ion ion-person-add"></i>
                     </div>
-                    <a asp-action="Index" asp-controller="Member" class="small-box-footer">@SharedLocalizer["MoreInfo"] <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-info">
-                    <div class="inner">
-                        <h3>@Model.NrEntries</h3>
-
-                        <p>@SharedLocalizer["Number Of Jobs"]</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                    <a asp-action="Index" asp-controller="Users" class="small-box-footer">@SharedLocalizer["MoreInfo"] <i class="fas fa-arrow-circle-right"></i></a>
+                    <a asp-action="" asp-controller="Member" class="small-box-footer">@SharedLocalizer["MoreInfo"] <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -73,16 +58,20 @@
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>65</h3>
+                        <h3>@Model.NrEntries</h3>
 
-                        <p>Entries</p>
+                        <p>@SharedLocalizer["Number Of Entries"]</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
                     </div>
-                    <a href="Entries" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a asp-action="" asp-controller="Entries" class="small-box-footer">@SharedLocalizer["MoreInfo"] <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                
             <!-- ./col -->
         </div>
         <!-- /.row -->

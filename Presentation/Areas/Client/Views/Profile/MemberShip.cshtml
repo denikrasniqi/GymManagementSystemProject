@@ -1,30 +1,15 @@
-﻿@using Microsoft.AspNetCore.Components;
-@using Presentation.Areas.Client.Models.ProfileViewModels
-@using GymManagementSystem.App.Interfaces
-@using GymManagementSystem.App.Constants
+﻿@using Presentation.Areas.Client.Models.ProfileViewModels
 @model ProfileViewModels
 @{
     var extensionsAll = "jpeg, jpg, png";
     var extensions = extensionsAll.Split(",").Select(x => x.Trim()).ToArray();
+
     Layout = null;
-}
-@inject IMemberRepository memberService
-@inject IUserService userService
-@inject NavigationManager NavigationManager
-@{
-
-    void RedirectToPage(int id, string message)
-    {
-        string url = $"/new-page?id={id}&message={message}"; // append the parameters to the URL using the query string
-        NavigationManager.NavigateTo(url);
-    }
-
 }
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-
 
     <title>bs5 edit profile account details - Bootdey.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -105,60 +90,55 @@
 
         <nav class="nav nav-borders">
             <a class="nav-link active ms-0" href="https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details" target="__blank">Profile</a>
-
-            <a class="nav-link" asp-action="Membership" asp-controller="profile" asp-area="client" target="__blank">Billing</a>
-            <input type="text" id="id" name="id" />
-            <button onclick="window.location.href='@Url.Action("Membership", "Profile", new { id = Model.AntaresimiId })'">Membership ndrro emrin</button>
-
+            <a class="nav-link" href="https://localhost:7003/Client/profile/membership/12" target="__blank">Billing</a>
         </nav>
         <hr class="mt-0 mb-4">
         <div class="row">
             <div class="col-xl-8">
 
                 <div class="card mb-4">
-                    <div class="card-header">Account Details</div>
+                    <div class="card-header">Membership Details</div>
                     <div class="card-body">
-                        <form id="usersform" asp-action="Account" asp-controller="profile" asp-area="client" method="post">
-                            <input type="hidden" asp-for="Id" />
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>your name</label>
-                                        <input type="text" asp-for="Name" class="form-control help-sidebar" data-title="user name" data-description="enter name" placeholder="enter name...">
+                            <form id="usersform" asp-action="Account" asp-controller="profile" asp-area="client" method="post">
+                                <input type="hidden" asp-for="Id" />
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>your name</label>
+                                            <input type="text" asp-for="Name" class="form-control help-sidebar" data-title="user name" data-description="enter name" placeholder="enter name...">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>your surname</label>
-                                        <input type="text" asp-for="Surname" class="form-control help-sidebar" data-title="user surname" data-description="enter surname " placeholder="enter surname...">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>your surname</label>
+                                            <input type="text" asp-for="Surname" class="form-control help-sidebar" data-title="user surname" data-description="enter surname " placeholder="enter surname...">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>your password</label>
-                                        <input type="text" asp-for="Password" class="form-control help-sidebar" data-title="user password" data-description="enter password " placeholder="enter password...">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>your startdate</label>
+                                            <input type="datetime" asp-for="StartDate" class="form-control help-sidebar" data-title="user startdate" data-description="enter password " placeholder="enter password...">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>your email</label>
-                                        <input type="text" asp-for="Email" class="form-control help-sidebar" data-title="user email" data-description="enter email " placeholder="enter email...">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>your membership status</label>
+                                            <input type="text" asp-for="Status" class="form-control help-sidebar" data-title="user email" data-description="enter email " placeholder="enter email...">
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>your phone number</label>
-                                        <input type="text" asp-for="PhoneNumber" class="form-control help-sidebar" data-title="user phonenumber" data-description="enter phonenumber " placeholder="enter phonenumber...">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>your membership type</label>
+                                            <input type="text" asp-for="Type" class="form-control help-sidebar" data-title="user phonenumber" data-description="enter phonenumber " placeholder="enter phonenumber...">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button type="submit" class="account-btn">edit</button>
+                                        <button type="submit" class="account-btn">save</button>
                                     </div>
                                 </div>
-
-                                <div class="col-md-12">
-                                    <button type="submit" class="account-btn">edit</button>
-                                    <button type="submit" class="account-btn">save</button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
                     </div>
                 </div>
             </div>
@@ -167,15 +147,13 @@
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
 
-    </script>
+    </script>f
     @section scripts{
         <!-- jquery-validation -->
         <script src="~/theme/plugins/jquery-validation/jquery.validate.min.js"></script>
         <script src="~/theme/plugins/jquery-validation/additional-methods.min.js"></script>
         <script src="~/theme/plugins/fileinput/js/fileinput.min.js"></script>
-
 
         <script>
             $(document).ready(function () {
@@ -203,11 +181,7 @@
                             required: true,
                             minlength: 3,
                         },
-                        Email: {
-                            required: true,
-                            email: true,
-                        },
-
+                        
                     },
                     messages: {
                         Name: {
@@ -218,11 +192,6 @@
                             required: "sharedlocalizer('fieldrequired')",
                             minlength: "sharedlocalizer('minlength3')"
                         },
-                        Email: {
-                            required: "sharedlocalizer('fieldrequired')",
-                            email: "sharedlocalizer('emailinvalidformat')",
-                        },
-
                     },
                     errorelement: 'span',
                     errorplacement: function (error, element) {

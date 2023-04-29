@@ -40,6 +40,10 @@ namespace Presentation.Areas.Client.Controllers
             if (id != null)
             {
                 AspNetUser? user = _userRepo.GetByStringId(id);
+                if (user is null) throw new ArgumentNullException(nameof(user));
+
+                int antaresimiId = _memberRepo.GetMemberIdByUserId(user.Id);
+
                 if (user != null)
                 {
                     model = new ProfileViewModels()
@@ -51,6 +55,7 @@ namespace Presentation.Areas.Client.Controllers
                         Name = user.Name!,
                         PhoneNumber = user.PhoneNumber,
                         Surname = user.Surname!,
+                        AntaresimiId = antaresimiId
                     };
 
                 }
@@ -101,7 +106,31 @@ namespace Presentation.Areas.Client.Controllers
                     }
                 }
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { area = "Client" });
+        }
+
+        [HttpGet]
+        public IActionResult Membership(string? id)
+        {
+            var model = new ProfileViewModels();
+            if (id != null)
+            {
+                Antaresimi? member = _memberRepo.GetByStringId(id);
+                if (member != null)
+                {
+                    model = new ProfileViewModels()
+                    {
+                        Id = id,
+                        Name = member.Name!,
+                        Surname = member.Surname,
+                        StartDate = member.StartDate,
+                        Status = member.Statusi,
+                        Type = member.Antaresimi1,
+                    };
+                    ViewBag.Id = id;
+                }
+            }
+            return View(model);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Presentation.Areas.Client
     public class HomeController : Controller
     {
         [Area(AreasConstants.Client)]
-        [Authorize( Roles = RoleConstants.Client)]
+        //[Authorize( Roles = RoleConstants.Client)]
         public IActionResult Index()
         {
             return View();

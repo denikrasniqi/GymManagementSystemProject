@@ -101,6 +101,8 @@ builder.Services.Configure<CookieTempDataProviderOptions>(options =>
 });
 
 
+
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     // Cookie settings
@@ -156,5 +158,46 @@ app.UseAuthorization();
 app.UseSession();
 
 app.MapRazorPages();
+app.UseHttpsRedirection();
+
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+    endpoints.MapControllerRoute(
+        name: "default_no_area",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+
+    endpoints.MapAreaControllerRoute(
+        name: "client",
+        areaName: "Client",
+        pattern: "",
+        defaults: new { controller = "Home", action = "Index" });
+});
+
+app.UseStatusCodePagesWithReExecute("/Error/{0}");
+
+app.UseExceptionHandler("/Error");
+
+app.Use(async (context, next) =>
+{
+    var url = context.Request.Path.Value;
+
+    if (url.EndsWith("/"))
+    {
+        context.Response.Redirect(url.TrimEnd('/') + context.Request.QueryString);
+        return;
+    }
+
+    await next();
+});
 
 app.Run();
