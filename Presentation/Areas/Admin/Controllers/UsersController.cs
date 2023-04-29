@@ -146,7 +146,6 @@ namespace Presantation.Areas.Admin.Controllers
         public IActionResult GetUsersJson()
         {
             var users = userRepository.GetAllWithRoles();
-            //users.ForEach(x => x.PasswordHash = userRepository.GetProfilePicturePath(x.Id, (int)ThumbnailsEnum.Grid));
             try
             {
                 var result = users.Select(x => new

@@ -64,10 +64,13 @@
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+                
+                    
                 <li class="nav-card-item-right">
-                    <form asp-area="Client" asp-action="Login" asp-controller="Account" >
-                        <button type="submit" class="nav-link">@SharedLocalizer["Sign Out"]</button>
+                    <form asp-area="Client" asp-action="Logout" asp-controller="Account">
+                        <button style="background-color:#92d35e; color:white;" type="submit" class="nav-link">Sign out</button>
                     </form>
+                </li>
                 </li>
                 <!-- Navbar Search -->
                 <li class="nav-item">
