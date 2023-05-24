@@ -4,7 +4,7 @@ In the add user section , you fill out the necessary information for the user su
 There are 2 roles : Admin and client . 
 Client role only has access to the main page ,and the ability to check out their profile and edit their information.
 Admin role can create other users ,delete them , promote their roles from client to admin and assign memberships.
-![image](https://user-images.githubusercontent.com/34380779/229549366-1b90ab74-26f5-4dd8-92ff-253f2425385c.png)
+![image](https://github.com/denikrasniqi/GymManagementSystemProject/assets/34380779/91f6e623-2b92-4786-a02d-ae5c0d7f0003)
 ![image](https://github.com/denikrasniqi/GymManagementSystemProject/assets/34380779/63fcc207-22e2-4293-86ae-9a99f9dc3d39)
 On the dashboard , the number of users , memberships and entries are all displayed .
 ![image](https://user-images.githubusercontent.com/34380779/229549524-f1051387-9d78-4c9d-a0d5-83b9317da190.png)
