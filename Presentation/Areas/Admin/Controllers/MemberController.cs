@@ -32,11 +32,11 @@ namespace Presentation.Areas.Admin.Controllers
         }
         public IActionResult Add()
         {
-            var model = new EntryViewModel();
+            var model = new MemberViewModel();
             return View(model);
         }
         [HttpPost]
-        public IActionResult AddAsync(EntryViewModel model)
+        public IActionResult AddAsync(MemberViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace Presentation.Areas.Admin.Controllers
             Antaresimi? member = _memberRepository.GetByStringId(id);
             if (member != null)
             {
-                var model = new EntryViewModel()
+                var model = new MemberViewModel()
                 {
                     Id = id,
                     Name = member.Name!,

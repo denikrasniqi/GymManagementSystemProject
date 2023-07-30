@@ -5,7 +5,7 @@ namespace GymManagementSystem.App.Interfaces
 {
     public interface IMemberRepository : IRepository<Antaresimi>
     {
-        List<MembersViewModel> GetAllMembers();
+        List<Antaresimi> GetAllMembers();
         AspNetUser GetMember(string name);
 
         Antaresimi? GetByStringId(string id);

@@ -4,6 +4,7 @@ using GymManagementSystem.Data.Context;
 using GymManagementSystem.Data.Entities;
 using GymManagementSystem.Models;
 
+
 namespace GymManagementSystem.App.Implementations
 {
     public class MemberRepository : Repository<Antaresimi>, IMemberRepository
@@ -15,10 +16,10 @@ namespace GymManagementSystem.App.Implementations
         }
 
 
-        public List<MembersViewModel> GetAllMembers()
+        public List<Antaresimi> GetAllMembers()
         {
             var members = _gymSystemDbContext.Antaresimis.Include(x=>x).ToList();
-            return new List<MembersViewModel>();
+            return new List<Antaresimi>();
         }
         /// <summary>
         /// GetMember by Name

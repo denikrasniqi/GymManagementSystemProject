@@ -1,6 +1,6 @@
 ﻿namespace GymManagementSystem.Models
 {
-    public class MembersViewModel
+    public class MembersViewModel //old one
     {
         public string? Id { get; set; }
         public string? UserId { get; set; }
