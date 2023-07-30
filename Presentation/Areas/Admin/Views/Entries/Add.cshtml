@@ -4,7 +4,7 @@
 @{
     string cssClass = string.IsNullOrEmpty(Model.Id) ? "primary" : "warning";
     string cardTitle = string.IsNullOrEmpty(Model.Id) ? "Add" : "Edit";
-    string cardTitleDescription = string.IsNullOrEmpty(Model.Id) ? "Add new user" : "Edit current user";
+    string cardTitleDescription = string.IsNullOrEmpty(Model.Id) ? "Add new entry" : "Edit current entry";
 
 
     var extensionsAll = "jpeg, jpg, png";
@@ -12,8 +12,8 @@
 }
 
 @section Styles{
-    <!-- File Input-->
-    <link href="~/theme/plugins/fileinput/css/fileinput.min.css" rel="stylesheet" />
+            <!-- File Input-->
+            <link href="~/theme/plugins/fileinput/css/fileinput.min.css" rel="stylesheet" />
 
 }
 
@@ -28,15 +28,15 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Users</a></li>
+                    <li class="breadcrumb-item"><a href="#">Entries</a></li>
                     @if (string.IsNullOrEmpty(Model.Id))
                     {
-                        <li class="breadcrumb-item active">Add</li>
+                                <li class="breadcrumb-item active">Add</li>
                     }
                     else
                     {
-                        <li class="breadcrumb-item"><a href="#">Edit</a></li>
-                        <li class="breadcrumb-item active">@Model.Id</li>
+                                <li class="breadcrumb-item"><a href="#">Edit</a></li>
+                                <li class="breadcrumb-item active">@Model.Id</li>
                     }
                 </ol>
             </div>
@@ -96,33 +96,33 @@
                                 </div>
                                 @if (ViewBag.IsAddMode)
                                 {
-                                    <div class="col-sm-6" style="display:none;">
-                                        <div class="form-group">
-                                            <input type="datetime-local" name="ExitDate" class="form-control help-sidebar" placeholder="Enter ExitTime" disabled>
-                                            <button class="btn btn-danger mt-3 color" type="button" onclick="getCurrentDateTime('exit')" disabled>Exit</button>
-                                        </div>
-                                    </div>
+                                            <div class="col-sm-6" style="display:none;">
+                                                <div class="form-group">
+                                                    <input type="datetime-local" name="ExitDate" class="form-control help-sidebar" placeholder="Enter ExitTime" disabled>
+                                                    <button class="btn btn-danger mt-3 color" type="button" onclick="getCurrentDateTime('exit')" disabled>Exit</button>
+                                                </div>
+                                            </div>
                                 }
                                 else
                                 {
-                                    <div class="col-sm-6" @if ((bool)(ViewBag.IsEditMode ?? false)) {
+                                            <div class="col-sm-6" @if ((bool)(ViewBag.IsEditMode ?? false)) {
                                 <text>style="display:none;"</text>
  }>
-            <div class="form-group">
-                <input type="datetime-local" name="EntryDate" class="form-control help-sidebar" placeholder="Enter EntryTime" @if (!(bool)(ViewBag.IsEditMode ?? false)) {
+                    <div class="form-group">
+                        <input type="datetime-local" name="EntryDate" class="form-control help-sidebar" placeholder="Enter EntryTime" @if (!(bool)(ViewBag.IsEditMode ?? false)) {
                                         <text>required</text>
  }>
-                <button class="btn btn-danger mt-3 color" type="button" onclick="getCurrentDateTime('entry')" @if ((bool)(ViewBag.IsEditMode ?? false)) {
+                        <button class="btn btn-danger mt-3 color" type="button" onclick="getCurrentDateTime('entry')" @if ((bool)(ViewBag.IsEditMode ?? false)) {
                                         <text>style="display:none;"</text>
  }>Entry</button>
-            </div>
-        </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <input type="datetime-local" name="ExitDate" class="form-control help-sidebar" placeholder="Enter ExitTime">
-                                            <button class="btn btn-danger mt-3 color" type="button" onclick="getCurrentDateTime('exit')">Exit</button>
-                                        </div>
-                                    </div>
+                    </div>
+                </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <input type="datetime-local" name="ExitDate" class="form-control help-sidebar" placeholder="Enter ExitTime">
+                                                    <button class="btn btn-danger mt-3 color" type="button" onclick="getCurrentDateTime('exit')">Exit</button>
+                                                </div>
+                                            </div>
                                 }
 
 
@@ -145,107 +145,107 @@
 </section>
 <!-- /.content -->
 @section Scripts{
-    <!-- jquery-validation -->
-    <script src="~/theme/plugins/jquery-validation/jquery.validate.min.js"></script>
-    <script src="~/theme/plugins/jquery-validation/additional-methods.min.js"></script>
+            <!-- jquery-validation -->
+            <script src="~/theme/plugins/jquery-validation/jquery.validate.min.js"></script>
+            <script src="~/theme/plugins/jquery-validation/additional-methods.min.js"></script>
 
-    <!-- File Input -->
-    <script src="~/theme/plugins/fileinput/js/fileinput.min.js"></script>
-    <script>
-        function getCurrentDateTime(button) {
-            var today = new Date().toISOString().slice(0, 19);
-            var inputField;
-            if (button === 'entry') {
-                inputField = document.querySelector("[name='EntryDate']");
-            } else if (button === 'exit') {
-                inputField = document.querySelector("[name='ExitDate']");
-            }
-            if (inputField !== null) { // add null check here
-                inputField.value = today;
-            }
-        }
-        $(document).ready(function () {
-
-            var maxUpload = 3000;
-            var uploadExtensions = @Html.Raw(Json.Serialize(extensions));
-
-            //this waits for click of button searchForUser
-            $('#searchForMember').on('click', function () {
-
-                //calls api to get user
-                //set the form data from given user
-                $.ajax({
-                    type: "GET",
-                    url: '@Url.Action("getMemberByName")',
-                    dataType: 'json',
-                    data: {
-                        name: $('#Name').val()
-                    },
-                    success: function (data) {
-                        //hide alert
-                        $("#showNotFoundAlert").prop("hidden", true)
-                        //sets the result to textbox Surname
-                        $('#Surname').val(data.surname);
-                        $('#UserId').val(data.id);
-                    },
-                    error: function (error) {
-                        if (error.status === 404) {
-                            //show alert
-                            $("#showNotFoundAlert").prop("hidden", false)
-                        }
+            <!-- File Input -->
+            <script src="~/theme/plugins/fileinput/js/fileinput.min.js"></script>
+            <script>
+                function getCurrentDateTime(button) {
+                    var today = new Date().toISOString().slice(0, 19);
+                    var inputField;
+                    if (button === 'entry') {
+                        inputField = document.querySelector("[name='EntryDate']");
+                    } else if (button === 'exit') {
+                        inputField = document.querySelector("[name='ExitDate']");
                     }
-                })
-            })
-
-            $('#EntriesForm').validate({
-                rules: {
-                    UserId: {
-                        required: true,
-                        minlength: 3,
-                    },
-                    StartDate: {
-                        required: true,
-                    },
-                    Statusi: {
-                        required: true,
-                    },
-                    Qmimi: {
-                        required: true,
-                    },
-                },
-                messages: {
-                    UserId: {
-                        required: "SharedLocalizer('FieldRequired')",
-                        minlength: "SharedLocalizer('MinLength3')"
-                    },
-                    Name: {
-                        required: "SharedLocalizer('FieldRequired')",
-                    },
-                    Surname: {
-                        required: "SharedLocalizer('FieldRequired')",
-                    },
-                    IsEntry: {
-                        required: "SharedLocalizer('FieldRequired')",
-                    },
-                    EntryDate: {
-                        required: "SharedLocalizer('FieldRequired')",
-                    },
-                },
-                errorElement: 'span',
-                errorPlacement: function (error, element) {
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
-                },
-                highlight: function (element, errorClass, validClass) {
-                    $(element).addClass('is-invalid');
-                },
-                unhighlight: function (element, errorClass, validClass) {
-                    $(element).removeClass('is-invalid');
-                },
-                submitHandler: function (form) {
-                    form.submit();
+                    if (inputField !== null) { // add null check here
+                        inputField.value = today;
+                    }
                 }
-            });
-        })
-    </script>
+                $(document).ready(function () {
+
+                    var maxUpload = 3000;
+                    var uploadExtensions = @Html.Raw(Json.Serialize(extensions));
+
+                    //this waits for click of button searchForUser
+                    $('#searchForMember').on('click', function () {
+
+                        //calls api to get user
+                        //set the form data from given user
+                        $.ajax({
+                            type: "GET",
+                            url: '@Url.Action("getMemberByName")',
+                            dataType: 'json',
+                            data: {
+                                name: $('#Name').val()
+                            },
+                            success: function (data) {
+                                //hide alert
+                                $("#showNotFoundAlert").prop("hidden", true)
+                                //sets the result to textbox Surname
+                                $('#Surname').val(data.surname);
+                                $('#UserId').val(data.id);
+                            },
+                            error: function (error) {
+                                if (error.status === 404) {
+                                    //show alert
+                                    $("#showNotFoundAlert").prop("hidden", false)
+                                }
+                            }
+                        })
+                    })
+
+                    $('#EntriesForm').validate({
+                        rules: {
+                            UserId: {
+                                required: true,
+                                minlength: 3,
+                            },
+                            StartDate: {
+                                required: true,
+                            },
+                            Statusi: {
+                                required: true,
+                            },
+                            Qmimi: {
+                                required: true,
+                            },
+                        },
+                        messages: {
+                            UserId: {
+                                required: "SharedLocalizer('FieldRequired')",
+                                minlength: "SharedLocalizer('MinLength3')"
+                            },
+                            Name: {
+                                required: "SharedLocalizer('FieldRequired')",
+                            },
+                            Surname: {
+                                required: "SharedLocalizer('FieldRequired')",
+                            },
+                            IsEntry: {
+                                required: "SharedLocalizer('FieldRequired')",
+                            },
+                            EntryDate: {
+                                required: "SharedLocalizer('FieldRequired')",
+                            },
+                        },
+                        errorElement: 'span',
+                        errorPlacement: function (error, element) {
+                            error.addClass('invalid-feedback');
+                            element.closest('.form-group').append(error);
+                        },
+                        highlight: function (element, errorClass, validClass) {
+                            $(element).addClass('is-invalid');
+                        },
+                        unhighlight: function (element, errorClass, validClass) {
+                            $(element).removeClass('is-invalid');
+                        },
+                        submitHandler: function (form) {
+                            form.submit();
+                        }
+                    });
+                })
+            </script>
 }
